@@ -1,31 +1,14 @@
 #!/usr/bin/python3
-"""
-    This is the index page handler for Flask.
-"""
-from api.v1.views import app_views
-from models import storage
+"""Initialize Blueprint views"""
+from flask import Blueprint
 
-classes = {"amenities": "Amenity",
-           "cities": "City",
-           "places": "Place",
-           "reviews": "Review",
-           "states": "State",
-           "users": "User"}
+app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
 
-
-@app_views.route('/status')
-def status():
-    """
-        Flask route at /status.
-        Displays the status of the API.
-    """
-    return {"status": "OK"}
-
-
-@app_views.route('/stats')
-def stats():
-    """
-        Flask route at /stats.
-        Displays the number of each objects by type.
-    """
-    return {k: storage.count(v) for k, v in classes.items()}
+from api.v1.views.index import *
+from api.v1.views.amenities import *
+from api.v1.views.cities import *
+from api.v1.views.places import *
+from api.v1.views.places_amenities import *
+from api.v1.views.places_reviews import *
+from api.v1.views.states import *
+from api.v1.views.users import *
